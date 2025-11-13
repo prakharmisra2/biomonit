@@ -3,15 +3,12 @@ const logger = require('../utils/logger');
 
 // Database connection pool
 const pool = new Pool({
-  host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT) || 5432,
-  database: process.env.DB_NAME || 'bio_monitor',
-  user: process.env.DB_USER || 'bio_monitor_app',
-  password: process.env.DB_PASSWORD,
-  max: parseInt(process.env.DB_MAX_POOL) || 20,
-  idleTimeoutMillis: parseInt(process.env.DB_IDLE_TIMEOUT) || 30000,
-  connectionTimeoutMillis: parseInt(process.env.DB_CONNECTION_TIMEOUT) || 2000,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false, // required for Supabase/Render external connection
+  },
 });
+
 
 // Test database connection
 pool.on('connect', () => {
