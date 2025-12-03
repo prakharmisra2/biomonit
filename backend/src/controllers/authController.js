@@ -23,7 +23,6 @@ const generateRefreshToken = (userId) => {
 // Login
 exports.login = async (req, res, next) => {
   try {
-    console.log('hhhh')
     const { username, password } = req.body;
     console.log(username,password)
     // Validate input

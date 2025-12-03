@@ -70,7 +70,7 @@ const ReactorDetail = () => {
   const latestData = dashboardData?.data?.latest;
   const statistics = reactor?.statistics;
   console.log("latestData",latestData);
-  console.log("formatted data",formatDate(latestData.dilution.uploaded_at))
+  //console.log("formatted data",formatDate(latestData.level_control.timestamp));
 
   return (
     <Box>
@@ -220,7 +220,7 @@ const ReactorDetail = () => {
                         pH
                       </Typography>
                       <Typography variant="h6">
-                        {formatNumber(latestData.gas.pH)}
+                        {formatNumber(latestData.gas.ph)}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -230,7 +230,7 @@ const ReactorDetail = () => {
                         DO
                       </Typography>
                       <Typography variant="h6">
-                        {formatNumber(latestData.gas.DO)}
+                        {formatNumber(latestData.gas.dissolved_oxygen)}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -250,7 +250,7 @@ const ReactorDetail = () => {
                         OUR
                       </Typography>
                       <Typography variant="h6">
-                        {formatNumber(latestData.gas.OUR)}
+                        {formatNumber(latestData.gas.our)}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -305,7 +305,7 @@ const ReactorDetail = () => {
                   </Grid>
                 </Grid>
                 <Typography variant="caption" color="text.secondary" sx={{ mt: 2, display: 'block' }}>
-                  Updated: {formatDate(latestData.dilution.uploaded_at)}
+                  Updated: {formatDate(latestData.dilution.timestamp)}
                 </Typography>
               </CardContent>
             </Card>

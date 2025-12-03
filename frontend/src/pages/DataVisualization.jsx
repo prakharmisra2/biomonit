@@ -58,7 +58,7 @@ const DataVisualization = () => {
 
   const [timeRange, setTimeRange] = useState(24);
   const [selectedDataType, setSelectedDataType] = useState('gas');
-  const [selectedFields, setSelectedFields] = useState(['pH', 'DO', 'reactor_temp']);
+  const [selectedFields, setSelectedFields] = useState(['our']);
   const [tabValue, setTabValue] = useState(0);
   const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'stack'
   const [isFullscreen, setIsFullscreen] = useState(false);

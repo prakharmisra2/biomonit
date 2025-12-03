@@ -9,7 +9,6 @@ import useAuthStore from '../store/authStore';
 export const useAuth = () => {
   const navigate = useNavigate();
   const { user, isAuthenticated, login, logout: logoutStore, updateUser } = useAuthStore();
-    console.log("hhh")
   // Login mutation
   const loginMutation = useMutation({
     mutationFn: authApi.login,

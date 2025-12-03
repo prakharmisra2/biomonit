@@ -23,15 +23,15 @@ export const DATA_TYPES = {
   ];
   
   export const GAS_FIELDS = [
-    { key: 'pH', label: 'pH' },
-    { key: 'DO', label: 'Dissolved Oxygen' },
+    { key: 'ph', label: 'pH' },
+    { key: 'dissolved_oxygen', label: 'Dissolved Oxygen' },
     { key: 'reactor_temp', label: 'Temperature (°C)' },
-    { key: 'OUR', label: 'OUR' },
-    { key: 'RQ', label: 'RQ' },
-    { key: 'Kla_1h', label: 'Kla (1/h)' },
+    { key: 'our', label: 'OUR' },
+    { key: 'rq', label: 'RQ' },
+    { key: 'kla_1h', label: 'Kla (1/h)' },
     { key: 'stirrer_speed', label: 'Stirrer Speed' },
     { key: 'gas_flow_in', label: 'Gas Flow In' },
-    { key: 'CPR', label: 'CPR' },
+    { key: 'cpr', label: 'CPR' },
   ];
   
   export const LEVEL_CONTROL_FIELDS = [

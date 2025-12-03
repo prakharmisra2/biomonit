@@ -22,10 +22,10 @@ exports.getReactorData = async (req, res, next) => {
   try {
     const { reactorId, dataType } = req.params;
     const { startTime, endTime, limit, offset, fields } = req.query;
-    console.log("get reactor data---> ", reactorId, dataType, req.query);
-    console.log ('query', req);
+    //console.log("get reactor data---> ", reactorId, dataType, req.query);
+    //console.log ('query', req);
     const DataModel = getDataModel(dataType);
-    console.log(DataModel, 'DataModel');
+    //console.log(DataModel, 'DataModel');
     const options = {
       startTime,
       endTime,
@@ -35,7 +35,7 @@ exports.getReactorData = async (req, res, next) => {
     };
 
     const data = await DataModel.getByReactor(reactorId, options);
-    console.log("data:",data)
+    //console.log("data:",data)
     res.json({
       success: true,
       count: data.length,
@@ -43,7 +43,6 @@ exports.getReactorData = async (req, res, next) => {
       data
     });
   } catch (error) {
-    console.log("here is problem")
     logger.error('Get reactor data error:', error);
     next(error);
   }
@@ -58,7 +57,8 @@ exports.getLatestData = async (req, res, next) => {
     const DataModel = getDataModel(dataType);
 
     const data = await DataModel.getLatest(reactorId, parseInt(count) || 1);
-
+    //console.log("latest data:",data)
+    // emitReactorData(reactorId, dataType, Array.isArray(data) ? data[0] : data);
     res.json({
       success: true,
       dataType,

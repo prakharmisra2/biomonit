@@ -15,6 +15,7 @@ import {
   ReferenceLine,
 } from 'recharts';
 import { format } from 'date-fns';
+import { formatDate, formatNumber } from '../../utils/helpers';
 
 const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', height = 600 }) => {
   // Prepare and decimate chart data for performance
@@ -24,11 +25,10 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
     // Decimate data if too many points (keep every nth point)
     const maxPoints = 1000;
     const step = Math.max(1, Math.floor(data.length / maxPoints));
-    
     return data
       .filter((_, index) => index % step === 0)
       .map((item) => ({
-        timestamp: format(new Date(item.timestamp), 'MM/dd HH:mm'),
+        timestamp: formatDate(item.timestamp),
         value: item[fieldName],
         fullTimestamp: item.timestamp,
       }));
@@ -66,7 +66,7 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
             {format(new Date(payload[0].payload.fullTimestamp), 'MMM dd, yyyy HH:mm:ss')}
           </Typography>
           <Typography variant="body1" fontWeight="bold" color={color} mt={1}>
-            {title}: {payload[0].value?.toFixed(3)}
+            {title}: {payload[0].value?.toFixed(4)}
           </Typography>
         </Box>
       );
@@ -76,10 +76,10 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
 
   if (!data || data.length === 0) {
     return (
-      <Card elevation={3}>
+      <Card elevation={3} width="100%">
         <CardContent>
           <Typography variant="h6" fontWeight="bold" mb={2}>
-            {title}
+            {title} klf
           </Typography>
           <Box
             display="flex"
@@ -97,7 +97,7 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
   }
 
   return (
-    <Card elevation={3}>
+    <Card elevation={3} sx={{ width: '100%' }}>
       <CardContent>
         {/* Header */}
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
@@ -120,10 +120,11 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
               stroke="#666"
             />
             <YAxis
+              datakey="value"
               tick={{ fontSize: 12 }}
               stroke="#666"
               domain={['auto', 'auto']}
-              tickFormatter={(value) => value.toFixed(2)}
+              tickFormatter={(value) => value.toFixed(4)}
             />
             <Tooltip content={<CustomTooltip />} />
             <Legend
@@ -166,7 +167,7 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
                 Latest
               </Typography>
               <Typography variant="h6" fontWeight="bold">
-                {stats.latest.toFixed(3)}
+                {stats.latest}
               </Typography>
             </Box>
             <Box textAlign="center">
@@ -174,7 +175,7 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
                 Average
               </Typography>
               <Typography variant="h6" fontWeight="bold">
-                {stats.avg.toFixed(3)}
+                {stats.avg}
               </Typography>
             </Box>
             <Box textAlign="center">
@@ -182,7 +183,7 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
                 Min
               </Typography>
               <Typography variant="h6" fontWeight="bold" color="primary">
-                {stats.min.toFixed(3)}
+                {stats.min}
               </Typography>
             </Box>
             <Box textAlign="center">
@@ -190,7 +191,7 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
                 Max
               </Typography>
               <Typography variant="h6" fontWeight="bold" color="error">
-                {stats.max.toFixed(3)}
+                {stats.max}
               </Typography>
             </Box>
           </Box>
