@@ -14,10 +14,12 @@ import {
   Brush,
   ReferenceLine,
 } from 'recharts';
-import { format } from 'date-fns';
 import { formatDate, formatNumber } from '../../utils/helpers';
+import usePrecisionStore from '../../store/precisionStore';
 
 const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', height = 600 }) => {
+  // Get precision from the store
+  const precision = usePrecisionStore((state) => state.precision);
   // Prepare and decimate chart data for performance
   const chartData = useMemo(() => {
     if (!data || data.length === 0) return [];
@@ -46,7 +48,7 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
       avg: values.reduce((a, b) => a + b, 0) / values.length,
       latest: values[values.length - 1],
       count: values.length,
-    };
+    };   
   }, [chartData]);
 
   const CustomTooltip = ({ active, payload }) => {
@@ -63,10 +65,10 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
           }}
         >
           <Typography variant="caption" display="block" fontWeight="bold">
-            {format(new Date(payload[0].payload.fullTimestamp), 'MMM dd, yyyy HH:mm:ss')}
+            {formatDate(payload[0].payload.fullTimestamp)}
           </Typography>
           <Typography variant="body1" fontWeight="bold" color={color} mt={1}>
-            {title}: {payload[0].value?.toFixed(4)}
+           {title}: {formatNumber(payload?.[0]?.value, precision)}
           </Typography>
         </Box>
       );
@@ -109,7 +111,7 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
 
         {/* Chart */}
         <ResponsiveContainer width="100%" height={height}>
-          <RechartsLineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 60 }}>
+          <RechartsLineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 20 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
             <XAxis
               dataKey="timestamp"
@@ -124,7 +126,7 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
               tick={{ fontSize: 12 }}
               stroke="#666"
               domain={['auto', 'auto']}
-              tickFormatter={(value) => value.toFixed(4)}
+              tickFormatter={(value) => formatNumber(value, precision)}
             />
             <Tooltip content={<CustomTooltip />} />
             <Legend
@@ -141,12 +143,12 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
               name={title}
               isAnimationActive={false}
             />
-            <Brush
+             <Brush 
               dataKey="timestamp"
               height={30}
               stroke={color}
               fill="#f5f5f5"
-            />
+              />
           </RechartsLineChart>
         </ResponsiveContainer>
 

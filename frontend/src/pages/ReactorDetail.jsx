@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import TextField from '@mui/material/TextField';
 import {
   Box,
   Typography,
@@ -28,11 +29,18 @@ import { useSocket } from '../hooks/useSocket';
 import Loading from '../components/Common/Loading';
 import ErrorMessage from '../components/Common/ErrorMessage';
 import { formatDate, formatNumber } from '../utils/helpers';
+import usePrecisionStore from '../store/precisionStore';
 
 const ReactorDetail = () => {
   const { reactorId } = useParams();
   const navigate = useNavigate();
   const { subscribeToReactor, unsubscribeFromReactor } = useSocket();
+  const precision = usePrecisionStore((state) => state.precision);
+  const setPrecision = usePrecisionStore((state) => state.setPrecision);
+
+  const handlePrecisionChange = (e) => {
+    setPrecision(e.target.value); // store will convert + positive integer
+  };
 
   // Subscribe to reactor on mount
   useEffect(() => {
@@ -87,6 +95,19 @@ const ReactorDetail = () => {
             {reactor?.location}
           </Typography>
         </Box>
+         {/* Precision Control */}
+        <Box mb={3} mt={4} sx={{width:100}}>
+          <TextField 
+           id="precision"
+           label="Precision" 
+           variant="outlined"
+           size="small"
+           onChange={handlePrecisionChange}
+           
+          />
+        </Box>
+
+
         <Chip
           label={reactor?.is_active ? 'Active' : 'Inactive'}
           color={reactor?.is_active ? 'success' : 'default'}
@@ -220,7 +241,7 @@ const ReactorDetail = () => {
                         pH
                       </Typography>
                       <Typography variant="h6">
-                        {formatNumber(latestData.gas.ph)}
+                        {formatNumber(latestData.gas.ph,precision)}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -230,7 +251,7 @@ const ReactorDetail = () => {
                         DO
                       </Typography>
                       <Typography variant="h6">
-                        {formatNumber(latestData.gas.dissolved_oxygen)}
+                        {formatNumber(latestData.gas.dissolved_oxygen,precision)}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -240,7 +261,7 @@ const ReactorDetail = () => {
                         Temp (°C)
                       </Typography>
                       <Typography variant="h6">
-                        {formatNumber(latestData.gas.reactor_temp)}
+                        {formatNumber(latestData.gas.reactor_temp,precision)}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -250,7 +271,7 @@ const ReactorDetail = () => {
                         OUR
                       </Typography>
                       <Typography variant="h6">
-                        {formatNumber(latestData.gas.our)}
+                        {formatNumber(latestData.gas.our,precision)}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -279,7 +300,7 @@ const ReactorDetail = () => {
                         Flow Rate
                       </Typography>
                       <Typography variant="h6">
-                        {formatNumber(latestData.dilution.flowrate)}
+                        {formatNumber(latestData.dilution.flowrate,precision)}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -289,7 +310,7 @@ const ReactorDetail = () => {
                         Dilution Rate
                       </Typography>
                       <Typography variant="h6">
-                        {formatNumber(latestData.dilution.dilution_rate)}
+                        {formatNumber(latestData.dilution.dilution_rate,precision)}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -299,7 +320,7 @@ const ReactorDetail = () => {
                         Volume
                       </Typography>
                       <Typography variant="h6">
-                        {formatNumber(latestData.dilution.volume_reactor)}
+                        {formatNumber(latestData.dilution.volume_reactor,precision)}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -328,7 +349,7 @@ const ReactorDetail = () => {
                         Weight (kg)
                       </Typography>
                       <Typography variant="h6">
-                        {formatNumber(latestData.level_control.reactor_weight)}
+                        {formatNumber(latestData.level_control.reactor_weight,precision)}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -338,7 +359,7 @@ const ReactorDetail = () => {
                         Volume (L)
                       </Typography>
                       <Typography variant="h6">
-                        {formatNumber(latestData.level_control.volume_reactor)}
+                        {formatNumber(latestData.level_control.volume_reactor,precision)}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -348,7 +369,7 @@ const ReactorDetail = () => {
                         PID Value
                       </Typography>
                       <Typography variant="h6">
-                        {formatNumber(latestData.level_control.pid_value)}
+                        {formatNumber(latestData.level_control.pid_value,precision)}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -358,7 +379,7 @@ const ReactorDetail = () => {
                         Pump RPM
                       </Typography>
                       <Typography variant="h6">
-                        {formatNumber(latestData.level_control.pump_rpm)}
+                        {formatNumber(latestData.level_control.pump_rpm,precision)}
                       </Typography>
                     </Paper>
                   </Grid>
