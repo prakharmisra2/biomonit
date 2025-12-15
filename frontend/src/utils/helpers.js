@@ -13,9 +13,11 @@ export const formatRelativeTime = (date) => {
   return formatDistance(new Date(date), new Date(), { addSuffix: true });
 };
 
-export const formatNumber = (num, decimals = 3) => {
+export const formatNumber = (num, precision = 3) => {
   if (num === null || num === undefined) return 'N/A';
-  return Number(num).toFixed(decimals);
+  const value = Number(num);
+  if (Number.isNaN(value)) return 'N/A';
+  return value.toFixed(precision);
 };
 
 export const downloadCSV = (blob, filename) => {
