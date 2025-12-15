@@ -78,7 +78,7 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
 
   if (!data || data.length === 0) {
     return (
-      <Card elevation={3} width="100%">
+      <Card elevation={3} width="100vh">
         <CardContent>
           <Typography variant="h6" fontWeight="bold" mb={2}>
             {title} klf
@@ -99,8 +99,8 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
   }
 
   return (
-    <Card elevation={3} sx={{ width: '100%' }}>
-      <CardContent>
+    <Card elevation={3} sx={{ width: '100%'}}>
+      <CardContent sx={{width: '100%'}}>
         {/* Header */}
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
           <Typography variant="h6" fontWeight="bold">
