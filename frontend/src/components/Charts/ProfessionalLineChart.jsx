@@ -1,6 +1,6 @@
 // src/components/Charts/ProfessionalLineChart.jsx
 
-import React, { useMemo } from 'react';
+import React, { useMemo ,useState } from 'react';
 import { Card, CardContent, Typography, Box, Chip } from '@mui/material';
 import {
   LineChart as RechartsLineChart,
@@ -20,6 +20,7 @@ import usePrecisionStore from '../../store/precisionStore';
 const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', height = 600 }) => {
   // Get precision from the store
   const precision = usePrecisionStore((state) => state.precision);
+  const [showMoreStats, setShowMoreStats] = useState(false);
   // Prepare and decimate chart data for performance
   const chartData = useMemo(() => {
     if (!data || data.length === 0) return [];
@@ -38,18 +39,31 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
 
   // Calculate statistics
   const stats = useMemo(() => {
-    if (chartData.length === 0) return null;
-    
-    const values = chartData.map(d => d.value).filter(v => v !== null && v !== undefined);
-    
-    return {
-      min: Math.min(...values),
-      max: Math.max(...values),
-      avg: values.reduce((a, b) => a + b, 0) / values.length,
-      latest: values[values.length - 1],
-      count: values.length,
-    };   
-  }, [chartData]);
+  if (chartData.length === 0) return null;
+
+  const values = chartData
+    .map(d => d.value)
+    .filter(v => v !== null && v !== undefined);
+
+  const avg = values.reduce((a, b) => a + b, 0) / values.length;
+
+  const variance =
+    values.reduce((sum, val) => sum + Math.pow(val - avg, 2), 0) / values.length;
+
+  const stdDev = Math.sqrt(variance);
+
+  const percentError = avg !== 0 ? (stdDev / avg) * 100 : 0;
+
+  return {
+    min: Math.min(...values),
+    max: Math.max(...values),
+    avg,
+    latest: values[values.length - 1],
+    stdDev,
+    percentError,
+    count: values.length,
+  };
+}, [chartData]);
 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -111,18 +125,18 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
 
         {/* Chart */}
         <ResponsiveContainer width="100%" height={height}>
-          <RechartsLineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 20 }}>
+          <RechartsLineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
             <XAxis
               dataKey="timestamp"
               tick={{ fontSize: 11 }}
               angle={-45}
               textAnchor="end"
-              height={80}
+              height={100}
               stroke="#666"
             />
             <YAxis
-              datakey="value"
+              dataKey="value"
               tick={{ fontSize: 12 }}
               stroke="#666"
               domain={['auto', 'auto']}
@@ -196,6 +210,15 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
                 {stats.max}
               </Typography>
             </Box>
+            <Box textAlign="center" width="100%">
+             <Typography
+              variant="body2"
+              sx={{ cursor: 'pointer' }}
+              onClick={() => setShowMoreStats(!showMoreStats)}
+              >
+            {showMoreStats ? 'Less' : 'More'}
+            </Typography>
+           </Box>
           </Box>
         )}
       </CardContent>
