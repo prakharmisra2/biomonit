@@ -23,9 +23,9 @@ export const getDashboardData = async (reactorId) => {
 };
 
 // Get data by time range
-export const getDataByTimeRange = async (reactorId, hours) => {
+export const getDataByTimeRange = async (reactorId, hours, start, end) => {
   const response = await axios.get(`/data/${reactorId}/time-range`, {
-    params: { hours }
+    params: { hours, start, end }
   });
   return response.data;
 };
