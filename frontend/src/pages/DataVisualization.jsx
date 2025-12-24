@@ -48,7 +48,7 @@ import ProfessionalLineChart from '../components/Charts/ProfessionalLineChart';
 import ProfessionalMultiLineChart from '../components/Charts/ProfessionalMultiLineChart';
 import ProfessionalRealTimeChart from '../components/Charts/ProfessionalRealTimeChart';
 import { DATA_TYPES, DILUTION_FIELDS, GAS_FIELDS, LEVEL_CONTROL_FIELDS } from '../utils/constants';
-import { downloadCSV } from '../utils/helpers';
+import { formatDate,downloadCSV } from '../utils/helpers';
 import { toast } from 'react-toastify';
 
 const DataVisualization = () => {
@@ -80,7 +80,10 @@ const DataVisualization = () => {
     queryKey: ['reactor', reactorId],
     queryFn: () => getReactorById(reactorId),
   });
-
+  const endt = new Date()
+  const end = formatDate(new Date())
+  const start = formatDate(new Date(endt - timeRange * 60 * 60 * 1000))
+  console.log("sending start end -->", start, " " , end)
   const {
     data: historyData,
     isLoading,
@@ -88,7 +91,7 @@ const DataVisualization = () => {
     refetch,
   } = useQuery({
     queryKey: ['reactorData', reactorId, timeRange],
-    queryFn: () => getDataByTimeRange(reactorId, timeRange),
+    queryFn: () => getDataByTimeRange(reactorId, timeRange, start, end),
     refetchInterval: 60000,
   });
 

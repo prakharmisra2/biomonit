@@ -1,11 +1,28 @@
 // src/utils/helpers.js
-
+const { formatInTimeZone } = require('date-fns-tz');
+const { parse } = require('date-fns');
+const { fromZonedTime } = require('date-fns-tz');
 /**
  * Format date to ISO string
  */
 const formatDate = (date) => {
-    return new Date(date).toISOString();
+  if (!date) return 'N/A';
+  return formatInTimeZone(date, 'UTC', 'MMM dd, yyyy HH:mm:ss');
   };
+
+  /**
+   * Convert formatted string to Date object
+   **/
+  const formatStringToDateObject = (dateString) => {
+    if (!dateString) return 'N/A';
+
+    const parsed = parse(
+      dateString,
+      'MMM dd, yyyy HH:mm:ss',
+      new Date()
+    );
+    return fromZonedTime(parsed, 'UTC');
+  }
   
   /**
    * Generate random string
@@ -68,6 +85,7 @@ const formatDate = (date) => {
   
   module.exports = {
     formatDate,
+    formatStringToDateObject,
     generateRandomString,
     isValidEmail,
     sanitizeInput,

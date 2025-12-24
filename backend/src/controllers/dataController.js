@@ -2,6 +2,8 @@ const { DilutionData, GasData, LevelControlData } = require('../models/Data');
 const logger = require('../utils/logger');
 const { emitReactorData } = require('../config/socket');
 const e = require('express');
+const { formatStringToDateObject } = require('../utils/helper');
+
 
 // Helper to get model based on data type
 const getDataModel = (dataType) => {
@@ -190,7 +192,7 @@ exports.getMultiFieldData = async (req, res, next) => {
 exports.getDataByTimeRange = async (req, res, next) => {
   try {
     const { reactorId } = req.params;
-    const { hours } = req.query;
+    const { hours, start,end } = req.query;
 
     if (!hours) {
       return res.status(400).json({
@@ -199,11 +201,21 @@ exports.getDataByTimeRange = async (req, res, next) => {
       });
     }
 
-    const endTime = new Date();
-    const startTime = new Date(endTime - hours * 60 * 60 * 1000);
-    console.log("reactor Id: ", reactorId)
-    console.log("start time: ", startTime)
-    console.log("end Time: ", endTime)
+    const endTime = formatStringToDateObject(end);
+    const startTime = formatStringToDateObject(start);
+    
+    //logs for debugging
+    // console.log("start time from the frontend", start);
+    // console.log("end time from the frontend", end);
+    // console.log("type of start");
+    // console.log(typeof start);
+
+    // console.log("---------------------------------------------------------");
+    // console.log(formatStringToDateObject(start));
+    // console.log(typeof formatStringToDateObject(start));
+    console.log("---------------------------------------------------------");
+    console.log("startTime:", startTime);
+    console.log("endTime:", endTime);
     // Get data from all three types
     const dilutionData = await DilutionData.getByReactor(reactorId, {
       startTime,
