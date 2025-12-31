@@ -5,7 +5,7 @@ import { formatInTimeZone } from 'date-fns-tz';
 
 export const formatDate = (date) => {
   if (!date) return 'N/A';
-  return formatInTimeZone(date, 'UTC', 'MMM dd, yyyy HH:mm:ss');
+  return formatInTimeZone(date, 'IST', 'MMM dd, yyyy HH:mm:ss');
 };
 
 export const formatRelativeTime = (date) => {
