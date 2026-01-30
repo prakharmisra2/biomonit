@@ -21,7 +21,7 @@ import {
 import {
   ArrowBack as BackIcon,
   ShowChart as ChartIcon,
-  Science as ScienceIcon,
+  // Science as ScienceIcon,
 } from '@mui/icons-material';
 import { getReactorById } from '../api/reactors';
 import { useDashboardData } from '../hooks/useReactorData';

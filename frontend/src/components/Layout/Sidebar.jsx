@@ -16,7 +16,6 @@ import {
 import {
   Dashboard as DashboardIcon,
   Science as ScienceIcon,
-  ShowChart as ChartIcon,
   Notifications as NotificationsIcon,
   AdminPanelSettings as AdminIcon,
   Person as PersonIcon,

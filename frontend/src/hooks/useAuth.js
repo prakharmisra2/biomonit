@@ -40,7 +40,7 @@ export const useAuth = () => {
   });
 
   // Get profile query
-  const { data: profileData, isLoading: isLoadingProfile } = useQuery({
+  const { isLoading: isLoadingProfile } = useQuery({
     queryKey: ['profile'],
     queryFn: authApi.getProfile,
     enabled: isAuthenticated,

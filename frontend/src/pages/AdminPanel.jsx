@@ -44,7 +44,7 @@ const AdminPanel = () => {
   const [tabValue, setTabValue] = useState(0);
   const [openUserDialog, setOpenUserDialog] = useState(false);
   const [openAssignDialog, setOpenAssignDialog] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
+// const [selectedUser, setSelectedUser] = useState(null);
 
   const [userFormData, setUserFormData] = useState({
     username: '',
@@ -76,7 +76,7 @@ const AdminPanel = () => {
   // Fetch reactors
   const {
     data: reactorsData,
-    refetch: refetchReactors,
+  //  refetch: refetchReactors,
   } = useQuery({
     queryKey: ['adminReactors'],
     queryFn: async () => {

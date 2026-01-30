@@ -8,8 +8,8 @@ import {
   Typography,
   Button,
   Grid,
-  Card,
-  CardContent,
+  // Card,
+  // CardContent,
   FormControl,
   InputLabel,
   Select,
@@ -23,9 +23,9 @@ import {
   Paper,
   Divider,
   Tooltip,
-  Menu,
-  ListItemIcon,
-  ListItemText,
+  // Menu,
+  // ListItemIcon,
+  // ListItemText,
 } from '@mui/material';
 import {
   ArrowBack as BackIcon,
@@ -35,9 +35,9 @@ import {
   FullscreenExit as FullscreenExitIcon,
   ViewModule as GridIcon,
   ViewStream as StackIcon,
-  ZoomIn as ZoomInIcon,
-  ZoomOut as ZoomOutIcon,
-  Settings as SettingsIcon,
+  // ZoomIn as ZoomInIcon,
+  // ZoomOut as ZoomOutIcon,
+  // Settings as SettingsIcon,
 } from '@mui/icons-material';
 import { getReactorById } from '../api/reactors';
 import { getDataByTimeRange, exportData } from '../api/data';
@@ -47,7 +47,7 @@ import ErrorMessage from '../components/Common/ErrorMessage';
 import ProfessionalLineChart from '../components/Charts/ProfessionalLineChart';
 import ProfessionalMultiLineChart from '../components/Charts/ProfessionalMultiLineChart';
 import ProfessionalRealTimeChart from '../components/Charts/ProfessionalRealTimeChart';
-import { DATA_TYPES, DILUTION_FIELDS, GAS_FIELDS, LEVEL_CONTROL_FIELDS } from '../utils/constants';
+import { DILUTION_FIELDS, GAS_FIELDS, LEVEL_CONTROL_FIELDS } from '../utils/constants';
 import { formatDate,downloadCSV } from '../utils/helpers';
 import { toast } from 'react-toastify';
 
@@ -63,7 +63,7 @@ const DataVisualization = () => {
   const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'stack'
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [chartHeight, setChartHeight] = useState(600);
-  const [settingsAnchor, setSettingsAnchor] = useState(null);
+  // const [settingsAnchor, setSettingsAnchor] = useState(null);
 
   useEffect(() => {
     if (reactorId) {

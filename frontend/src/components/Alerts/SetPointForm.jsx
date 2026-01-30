@@ -15,7 +15,7 @@ import {
   Grid,
 } from '@mui/material';
 import { createSetPoint } from '../../api/alerts';
-import { DATA_TYPES, DILUTION_FIELDS, GAS_FIELDS, LEVEL_CONTROL_FIELDS } from '../../utils/constants';
+import { DILUTION_FIELDS, GAS_FIELDS, LEVEL_CONTROL_FIELDS } from '../../utils/constants';
 import { toast } from 'react-toastify';
 
 const SetPointForm = ({ reactors, onClose, onSuccess }) => {
