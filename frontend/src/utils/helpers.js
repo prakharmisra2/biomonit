@@ -1,13 +1,13 @@
 // src/utils/helpers.js
 
-import { format, formatDistance } from 'date-fns';
-//import { formatInTimeZone } from 'date-fns-tz';
+import { formatDistance } from 'date-fns';
+import { formatInTimeZone , toDate} from 'date-fns-tz';
 
-export const formatDate = (date) => {
-  if (!date) return 'N/A';
-  return format(date, 'MMM dd, yyyy HH:mm:ss');
+export const formatDate = (dateStr) => {
+  if (!dateStr) return 'N/A';
+  const zonedDate = toDate(dateStr, { timeZone: 'Asia/Kolkata' }); // Parse string AS IST → correct UTC Date
+  return formatInTimeZone(zonedDate, 'Asia/Kolkata', 'MMM dd, yyyy HH:mm:ss');
 };
-
 export const formatRelativeTime = (date) => {
   if (!date) return 'N/A';
   return formatDistance(new Date(date), new Date(), { addSuffix: true });
