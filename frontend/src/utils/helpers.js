@@ -1,11 +1,11 @@
 // src/utils/helpers.js
 
-import { formatDistance } from 'date-fns';
+import { format, formatDistance } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
 
 export const formatDate = (date) => {
   if (!date) return 'N/A';
-  return formatInTimeZone(date, 'IST', 'MMM dd, yyyy HH:mm:ss');
+  return format(date, 'MMM dd, yyyy HH:mm:ss');
 };
 
 export const formatRelativeTime = (date) => {
