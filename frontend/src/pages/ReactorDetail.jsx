@@ -28,7 +28,7 @@ import { useDashboardData } from '../hooks/useReactorData';
 import { useSocket } from '../hooks/useSocket';
 import Loading from '../components/Common/Loading';
 import ErrorMessage from '../components/Common/ErrorMessage';
-import { formatDate, formatNumber } from '../utils/helpers';
+import { formatDateTimeAsIs, formatNumber } from '../utils/helpers';
 import usePrecisionStore from '../store/precisionStore';
 
 const ReactorDetail = () => {
@@ -159,7 +159,7 @@ const ReactorDetail = () => {
                 <ListItem>
                   <ListItemText
                     primary="Created"
-                    secondary={formatDate(reactor?.created_at)}
+                    secondary={formatDateTimeAsIs(reactor?.created_at)}
                   />
                 </ListItem>
               </List>
@@ -277,7 +277,7 @@ const ReactorDetail = () => {
                   </Grid>
                 </Grid>
                 <Typography variant="caption" color="text.secondary" sx={{ mt: 2, display: 'block' }}>
-                  Updated: {formatDate(latestData.gas.timestamp)}
+                  Updated: {formatDateTimeAsIs(latestData.gas.timestamp)}
                 </Typography>
               </CardContent>
             </Card>
@@ -326,7 +326,7 @@ const ReactorDetail = () => {
                   </Grid>
                 </Grid>
                 <Typography variant="caption" color="text.secondary" sx={{ mt: 2, display: 'block' }}>
-                  Updated: {formatDate(latestData.dilution.timestamp)}
+                  Updated: {formatDateTimeAsIs(latestData.dilution.timestamp)}
                 </Typography>
               </CardContent>
             </Card>
@@ -385,7 +385,7 @@ const ReactorDetail = () => {
                   </Grid>
                 </Grid>
                 <Typography variant="caption" color="text.secondary" sx={{ mt: 2, display: 'block' }}>
-                  Updated: {formatDate(latestData.level_control.timestamp)}
+                  Updated: {formatDateTimeAsIs(latestData.level_control.timestamp)}
                 </Typography>
               </CardContent>
             </Card>

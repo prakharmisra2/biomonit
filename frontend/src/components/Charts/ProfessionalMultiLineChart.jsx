@@ -12,9 +12,8 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { format } from 'date-fns';
 import usePrecisionStore from '../../store/precisionStore';
-import { formatDate, formatNumber } from '../../utils/helpers';
+import { formatDateTimeAsIs, formatNumber } from '../../utils/helpers';
 
 const COLORS = ['#1976d2', '#dc004e', '#2e7d32', '#ed6c02', '#9c27b0', '#00acc1'];
 
@@ -23,8 +22,7 @@ const MultiLineChart = ({ data, fields, title, height = 400 }) => {
   const precision = usePrecisionStore((state) => state.precision);
   const chartData = data.map((item) => {
     const point = {
-      timestamp: format(new Date(item.timestamp), 'MMM dd, yyyy HH:mm:ss'),
-
+      timestamp: formatDateTimeAsIs(item.timestamp),
       fullTimestamp: item.timestamp,
     };
     fields.forEach((field) => {
@@ -47,7 +45,7 @@ const MultiLineChart = ({ data, fields, title, height = 400 }) => {
           }}
         >
           <Typography variant="caption" display="block" mb={1}>
-            {formatDate(payload[0].payload.fullTimestamp)}
+            {formatDateTimeAsIs(payload[0].payload.fullTimestamp)}
           </Typography>
           {payload.map((entry, index) => (
             <Typography

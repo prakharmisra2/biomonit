@@ -14,7 +14,7 @@ import {
   Brush,
   ReferenceLine,
 } from 'recharts';
-import { formatDate, formatNumber } from '../../utils/helpers';
+import { formatDateTimeAsIs, formatNumber } from '../../utils/helpers';
 import usePrecisionStore from '../../store/precisionStore';
 
 const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', height = 600 }) => {
@@ -30,7 +30,7 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
     return data
       .filter((_, index) => index % step === 0)
       .map((item) => ({
-        timestamp: formatDate(item.timestamp),
+        timestamp: formatDateTimeAsIs(item.timestamp),
         value: item[fieldName],
         fullTimestamp: item.timestamp,
       }));
@@ -81,7 +81,7 @@ const ProfessionalLineChart = ({ data, fieldName, title, color = '#1976d2', heig
           }}
         >
           <Typography variant="caption" display="block" fontWeight="bold">
-            {formatDate(payload[0].payload.fullTimestamp)}
+            {formatDateTimeAsIs(payload[0].payload.fullTimestamp)}
           </Typography>
           <Typography variant="body1" fontWeight="bold" color={color} mt={1}>
            {title}: {formatNumber(payload?.[0]?.value, precision)}

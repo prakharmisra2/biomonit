@@ -1,23 +1,29 @@
 // src/utils/helpers.js
 
 import { formatDistance } from 'date-fns';
-// import { formatInTimeZone } from 'date-fns-tz';
+import { formatInTimeZone } from 'date-fns-tz';
 
-export const formatDate = (utcTimestamp) => {
-  if (!utcTimestamp) return 'N/A';
-  const date = new Date(utcTimestamp);
-  return date.toLocaleString('en-IN', { 
-    timeZone: 'Asia/Kolkata',
-    month: 'short', 
-    day: 'numeric', 
-    year: 'numeric',
-    hour: '2-digit', 
-    minute: '2-digit', 
-    second: '2-digit',
-    hour12: false 
-  }).replace(/,/, ''); // Clean up comma for exact match
+export const formatDate = (date) => {
+  if (!date) return 'N/A';
+  return formatInTimeZone(date, 'IST', 'MMM dd, yyyy HH:mm:ss');
 };
 
+export function formatDateTimeAsIs(isoString) {
+  // Remove the Z so JS doesn't force UTC
+  const cleaned = isoString.replace("Z", "");
+
+  const date = new Date(cleaned);
+
+  return date.toLocaleString("en-US", {
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  });
+}
 
 export const formatRelativeTime = (date) => {
   if (!date) return 'N/A';
