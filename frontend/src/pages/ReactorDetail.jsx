@@ -78,7 +78,7 @@ const ReactorDetail = () => {
   const latestData = dashboardData?.data?.latest;
   const statistics = reactor?.statistics;
   console.log("latestData",latestData);
-  console.log("formatted data",formatDate(latestData.level_control.timestamp));
+  // console.log("formatted data",formatDate(latestData.level_control.timestamp));
 
   return (
     <Box>

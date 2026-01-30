@@ -1,13 +1,23 @@
 // src/utils/helpers.js
 
 import { formatDistance } from 'date-fns';
-import { formatInTimeZone, zonedTimeToUtc} from 'date-fns-tz';
+// import { formatInTimeZone } from 'date-fns-tz';
 
-export const formatDate = (utcStr) => {
-  if (!utcStr) return 'N/A';
-  const utcDate = zonedTimeToUtc(utcStr, 'UTC'); // Explicit: treat input as UTC
-  return formatInTimeZone(utcDate, 'Asia/Kolkata', 'MMM dd, yyyy HH:mm:ss');
+export const formatDate = (utcTimestamp) => {
+  if (!utcTimestamp) return 'N/A';
+  const date = new Date(utcTimestamp);
+  return date.toLocaleString('en-IN', { 
+    timeZone: 'Asia/Kolkata',
+    month: 'short', 
+    day: 'numeric', 
+    year: 'numeric',
+    hour: '2-digit', 
+    minute: '2-digit', 
+    second: '2-digit',
+    hour12: false 
+  }).replace(/,/, ''); // Clean up comma for exact match
 };
+
 
 export const formatRelativeTime = (date) => {
   if (!date) return 'N/A';
