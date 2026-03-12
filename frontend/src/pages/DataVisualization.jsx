@@ -83,7 +83,7 @@ const DataVisualization = () => {
   const endt = new Date()
   const end = formatDate(new Date())
   const start = formatDate(new Date(endt - timeRange * 60 * 60 * 1000))
-  console.log("sending start end -->", start, " " , end)
+  // console.log("sending start end -->", start, " " , end)
   const {
     data: historyData,
     isLoading,

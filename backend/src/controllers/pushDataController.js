@@ -38,7 +38,7 @@ class PushDataController {
         result = await this.handleLevelControlData(payload.level_control);
       } 
       if (payload.dilution) {
-        result = await this.handleDilutionData(payload);
+        result = await this.handleDilutionData(payload.dilution);
       }
 
       return res.status(200).json({
@@ -96,6 +96,8 @@ class PushDataController {
       yco2out: gasData.Yco2out,
       yinertIn: gasData.Yinert_in,
       yinertOut: gasData.Yinert_out,
+      c_O2_dw: gasData.c_O2_dw,
+      c_O2: gasData.c_O2,
       uploadedAt: gasData.uploaded_at
     };
 
@@ -119,7 +121,8 @@ class PushDataController {
       reactorWeight: levelData.reactor_weight,
       volumeReactor: levelData.volume_reactor,
       pidValue: levelData.pid_value,
-      pumpRpm: levelData.pump_rpm,
+      outletPumpRpm: levelData.outlet_pump_rpm,
+      inletPumpRpm: levelData.inlet_pump_rpm,
       uploadedAt: levelData.uploaded_at
     };
 
@@ -149,7 +152,6 @@ class PushDataController {
       totalTankBalance: dilutionData.total_tank_balance,
       uploadedAt: dilutionData.uploaded_at
     };
-
     const result = await DilutionData.create(data);
     return result;
   }
@@ -157,6 +159,7 @@ class PushDataController {
   /**
    * Bulk insert endpoint for batch data uploads
    * Optional enhancement for future use
+   * do update the bulk data push for all data types i.e. gas, level, dilution for exact matching set of fields available in excel and database
    */
   async bulkPushData(req, res) {
     try {

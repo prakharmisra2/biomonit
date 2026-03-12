@@ -132,7 +132,7 @@ class GasData {
       reactorId, timestamp, our, rq, kla1h, klaBar, stirrerSpeed,
       pH, do: doValue, reactorTemp, pio2, gasFlowIn, reactorVolume,
       tout, tin, pout, pin, gasOut, ni, nout, cpr,
-      yo2in, yo2out, yco2in, yco2out, yinertIn, yinertOut, uploadedAt
+      yo2in, yo2out, yco2in, yco2out, yinertIn, yinertOut,c_O2_dw, c_O2, uploadedAt
     } = data;
 
     const result = await query(
@@ -140,21 +140,21 @@ class GasData {
        (reactor_id, timestamp, our, rq, kla_1h, kla_bar, stirrer_speed,
         ph, dissolved_oxygen, reactor_temp, pio2, gas_flow_in, reactor_volume,
         tout, tin, pout, pin, gas_out, ni, nout, cpr,
-        yo2in, yo2out, yco2in, yco2out, yinert_in, yinert_out, uploaded_at)
+        yo2in, yo2out, yco2in, yco2out, yinert_in, yinert_out, uploaded_at,c_o2_dw, c_o2)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13,
-               $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28)
+               $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30)
        RETURNING *`,
       [
         reactorId, timestamp, our, rq, kla1h, klaBar, stirrerSpeed,
         pH, doValue, reactorTemp, pio2, gasFlowIn, reactorVolume,
         tout, tin, pout, pin, gasOut, ni, nout, cpr,
-        yo2in, yo2out, yco2in, yco2out, yinertIn, yinertOut, uploadedAt
+        yo2in, yo2out, yco2in, yco2out, yinertIn, yinertOut, uploadedAt, c_O2_dw, c_O2
       ]
     );
 
     return result.rows[0];
   }
-
+// bulk create is not updated according to the database fields and it is currently for future use and not being used currently.
   static async bulkCreate(dataArray) {
     if (dataArray.length === 0) return [];
 
@@ -262,14 +262,14 @@ class GasData {
 // ============================================
 class LevelControlData {
   static async create(data) {
-    const { reactorId, timestamp, reactorWeight, volumeReactor, pidValue, pumpRpm, uploadedAt } = data;
+    const { reactorId, timestamp, reactorWeight, volumeReactor, pidValue, outletPumpRpm, inletPumpRpm, uploadedAt } = data;
 
     const result = await query(
       `INSERT INTO level_control_data 
-       (reactor_id, timestamp, reactor_weight, volume_reactor, pid_value, pump_rpm, uploaded_at)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)
+       (reactor_id, timestamp, reactor_weight, volume_reactor, pid_value, outlet_pump_rpm, uploaded_at, inlet_pump_rpm)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
        RETURNING *`,
-      [reactorId, timestamp, reactorWeight, volumeReactor, pidValue, pumpRpm, uploadedAt]
+      [reactorId, timestamp, reactorWeight, volumeReactor, pidValue, outletPumpRpm, uploadedAt, inletPumpRpm]
     );
 
     return result.rows[0];
