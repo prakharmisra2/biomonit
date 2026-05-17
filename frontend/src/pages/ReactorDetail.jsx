@@ -392,7 +392,7 @@ const ReactorDetail = () => {
           </Grid>
         )}
 
-        {/* Equipment List */}
+        {/* Equipment List new and some updates */}
         {reactor?.equipment && reactor.equipment.length > 0 && (
           <Grid item xs={12}>
             <Card>
